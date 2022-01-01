@@ -80,3 +80,13 @@ bool Stack::pop( StackItem& stackTop ) {
         return true;
     }
 }
+
+bool Stack::getTop( StackItem& stackTop ) const {
+    if ( isEmpty() ) {
+        return false;
+    }
+    else {
+        stackTop = topNode->item;
+        return true;
+    }
+}
