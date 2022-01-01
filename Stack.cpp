@@ -63,3 +63,20 @@ bool Stack::pop() {
         return true;
     }
 }
+
+bool Stack::pop( StackItem& stackTop ) {
+    if ( isEmpty() ) {
+        return false;
+    }
+    else {
+        stackTop = topNode->item;
+
+        StackNode *temp = topNode;
+        topNode = topNode->next;
+
+        temp->next = NULL;
+        delete temp;
+
+        return true;
+    }
+}
