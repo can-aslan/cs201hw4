@@ -5,6 +5,9 @@
 using namespace std;
 
 int main() {
-    cout << "Test!" << endl;
+    cout << ('+' <= '-') << endl;
+    cout << ('*' <= '-') << endl;
+    cout << ('+' <= '*') << endl;
+    cout << ('/' <= '*') << endl;
     return 0;
 }

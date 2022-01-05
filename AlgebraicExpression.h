@@ -1,3 +1,5 @@
+// Yağız Can Aslan 22001943
+
 #include <string>
 using namespace std;
 
@@ -10,3 +12,4 @@ string postfix2prefix( const string exp );
 double evaluateInfix( const string exp );
 double evaluatePrefix( const string exp );
 double evaluatePostfix( const string exp );
+bool precedence( const char a, const char b );
