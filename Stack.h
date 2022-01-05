@@ -4,7 +4,7 @@
 #include <string>
 using namespace std;
 
-typedef char StackItem;
+typedef string StackItem;
 
 class Stack{
     public:

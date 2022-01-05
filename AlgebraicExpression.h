@@ -13,3 +13,7 @@ double evaluateInfix( const string exp );
 double evaluatePrefix( const string exp );
 double evaluatePostfix( const string exp );
 bool precedence( const char a, const char b );
+bool isOperator( const char a );
+bool isOperand( const char a );
+string toStringFromChar( char a );
+char toCharFromString( string a );
