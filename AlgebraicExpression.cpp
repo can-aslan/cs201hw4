@@ -181,7 +181,10 @@ bool precedence( const char a, const char b ) { // Returns true if a has precede
 }
 
 string infix2prefix( const string exp ) {
-    return NULL;
+    string result;
+    result = infix2postfix(exp);
+    result = postfix2prefix(result);
+    return result;
 }
 
 string infix2postfix( const string exp ) {
@@ -302,11 +305,17 @@ string prefix2infix( const string exp ) {
 }
 
 string prefix2postfix( const string exp ) {
-    return NULL;
+    string result;
+    result = prefix2infix(exp);
+    result = infix2postfix(result);
+    return result;
 }
 
 string postfix2infix( const string exp ) {
-    return NULL;
+    string result;
+    result = postfix2prefix(exp);
+    result = prefix2infix(result);
+    return result;
 }
 
 string postfix2prefix( const string exp ) {
@@ -363,11 +372,15 @@ string postfix2prefix( const string exp ) {
 }
 
 double evaluateInfix( const string exp ) {
-    return 0;
+    string eval;
+    eval = infix2postfix( exp);
+    return evaluatePostfix( eval);
 }
 
 double evaluatePrefix( const string exp ) {
-    return 0;
+    string eval;
+    eval = prefix2postfix( exp);
+    return evaluatePostfix( eval);
 }
 
 double evaluatePostfix( const string exp ) {
