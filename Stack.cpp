@@ -1,6 +1,7 @@
 // Yağız Can Aslan 22001943
 
 // Stack Class modified from Lecture Slides (Slide 10)
+#include <iostream>
 #include <string>
 #include "Stack.h"
 using namespace std;

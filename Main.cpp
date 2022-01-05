@@ -13,7 +13,7 @@ int main() {
     //cout << prefix2postfix("* + * 100 2 4 - 12 4") << endl;
     //cout << evaluatePrefix("* + * 100 2 4 - 12 4") << endl;
     //cout << postfix2infix("100 12 2 - 8 * + 4 /") << endl;
-    //cout << postfix2prefix("100 12 2 - 8 * + 4 /") << endl;
+    cout << postfix2prefix("100 12 2 - 8 * + 4 /") << endl;
     cout << evaluatePostfix("100 12 2 - 8 * + 4 /") << endl;
     return 0;
 }

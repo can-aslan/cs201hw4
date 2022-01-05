@@ -17,3 +17,5 @@ bool isOperator( const char a );
 bool isOperand( const char a );
 string toStringFromChar( char a );
 char toCharFromString( string a );
+double toDoubleFromString( string a );
+int precedenceWithParanthesis( const char a );
