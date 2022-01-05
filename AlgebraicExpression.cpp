@@ -1,6 +1,5 @@
 // Yağız Can Aslan 22001943
 
-#include <iostream>
 #include <string>
 #include <sstream>
 #include "AlgebraicExpression.h"
@@ -259,7 +258,6 @@ string prefix2infix( const string exp ) {
     int index = length - 1;
 
     while ( i < length ) {
-        cout << exp[index-i] << ": " << isOperand(exp[index-i]) << endl;
         while ( exp[index - i] != ' ' && isOperand(exp[index - i]) ) {
             string currentNumber = "";
 
