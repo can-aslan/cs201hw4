@@ -1,9 +1,21 @@
 // Yağız Can Aslan 22001943
 
+#include <iostream>
 #include <string>
+#include <sstream>
 #include "AlgebraicExpression.h"
 #include "Stack.h"
 using namespace std;
+
+double toDoubleFromString( string a ) {
+    double result;
+    stringstream stream;
+
+    stream << a;
+    stream >> result;
+
+    return result;
+}
 
 string toStringFromChar( char a ) {
     string result;
@@ -216,15 +228,60 @@ double evaluatePostfix( const string exp ) {
 
             stck.push(currentNumber);
         }
+        
+        if ( isOperator(exp[i]) ) {
+            double firstValue;
+            string firstString;
+            stck.pop(firstString);
+            firstValue = toDoubleFromString(firstString);
+
+            double secondValue;
+            string secondString;
+            stck.pop(secondString);
+            secondValue = toDoubleFromString(secondString);
+
+            double calculation;
+            string resultString;
+            ostringstream stringStream;
+
+            switch (exp[i])
+            {
+            case '+':
+                calculation = secondValue + firstValue;
+                stringStream << calculation;
+                resultString = stringStream.str();
+
+                stck.push( resultString );
+                break;
+            case '-':
+                calculation = secondValue - firstValue;
+                stringStream << calculation;
+                resultString = stringStream.str();
+
+                stck.push( resultString );
+                break;
+            case '/':
+                calculation = secondValue / firstValue;
+                stringStream << calculation;
+                resultString = stringStream.str();
+
+                stck.push( resultString );
+                break;
+            case '*':
+                calculation = secondValue * firstValue;
+                stringStream << calculation;
+                resultString = stringStream.str();
+
+                stck.push( resultString );
+                break;
+            }
+        }
 
         i++;
     }
-    
-    while ( !stck.isEmpty() ) {
-        string top;
-        stck.pop(top);
-        cout << top << endl;
-    }
 
+    string resultString;
+    stck.pop(resultString);
+    result = toDoubleFromString(resultString);
     return result;
 }
