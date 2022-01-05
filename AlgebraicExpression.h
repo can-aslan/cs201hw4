@@ -19,3 +19,4 @@ string toStringFromChar( char a );
 char toCharFromString( string a );
 double toDoubleFromString( string a );
 int precedenceWithParanthesis( const char a );
+string trimmer( string s );

@@ -7,6 +7,43 @@
 #include "Stack.h"
 using namespace std;
 
+string trimmer( string s ) {
+    int i = 0;
+    string result;
+
+    while ( s[i] == ' ' ) {
+        i++;
+    }
+
+    while ( s[i] != '\0' ) {
+        if ( s[i] != ' ' ) {
+            if ( isOperator(s[i]) && isOperand(s[i - 1]) && s[i - 1] != ' ' ) {
+                result = result + " ";
+            }
+            else if ( isOperand(s[i]) && isOperator(s[i - 1]) && s[i - 1] != ' ' ) {
+                result = result + " ";
+            }
+            else if ( isOperator(s[i]) && isOperator(s[i - 1]) && s[i - 1] != ' ' ) {
+                result = result + " ";
+            }
+
+            result = result + s[i];
+        }
+        else {
+            result = result + " ";
+            while ( s[i] == ' ' ) {
+                i++;
+            }
+
+            i--;
+        }
+
+        i++;
+    }
+
+    return result;
+}
+
 double toDoubleFromString( string a ) {
     double result;
     stringstream stream;
@@ -148,11 +185,80 @@ string infix2prefix( const string exp ) {
 }
 
 string infix2postfix( const string exp ) {
+    /*
     string postfix = "";
     int i = 0;
     Stack stck;
-
+    
     while ( exp[i] != '\0' ) {
+        while ( exp[i] != ' ' && isOperand(exp[i]) ) {
+            string currentNumber = "";
+            int j = 0;
+            int initialI = i;
+
+            while ( exp[initialI + j] != ' ' ) {
+                currentNumber += exp[initialI + j];
+                j++;
+                i++;
+            }
+
+            postfix = postfix + currentNumber;
+        }
+
+        if ( exp[i] == '(' ) {
+            stck.push("(");
+        }
+        else if ( exp[i] == ')' ) {
+            string topString = "";
+            stck.getTop( topString);
+
+            while ( topString != "(" ) {
+                postfix = postfix + topString;
+                stck.pop();
+                stck.getTop( topString);
+            }
+            
+            stck.getTop( topString); // For redundancy
+            if ( topString == "(" ) {
+                stck.pop();
+            }
+        }
+        
+        string topString2 = "";
+        if ( stck.getTop( topString2) ) {
+            char topChar = toCharFromString(topString2);
+            if ( isOperator(exp[i]) && precedenceWithParanthesis(exp[i]) > precedenceWithParanthesis(topChar) ) {
+                stck.push(toStringFromChar(exp[i]));
+            }
+            else if ( isOperator(exp[i]) && precedenceWithParanthesis(exp[i]) <= precedenceWithParanthesis(topChar) ) {
+                while ( !stck.isEmpty() || precedenceWithParanthesis(exp[i]) <= precedenceWithParanthesis(topChar) ) {
+                    string addThis = "";
+                    if ( stck.pop(addThis) ) {
+                        postfix = postfix + addThis;
+
+                        if (stck.getTop( topString2)) {
+                            topChar = toCharFromString(topString2);
+                        }
+                    }
+                }
+
+                stck.push(toStringFromChar(exp[i]));
+            }
+            else {
+                stck.push(toStringFromChar(exp[i]));
+            }
+        }
+
+        i++;
+    }
+
+    string addToResult = "";
+    while ( !stck.isEmpty() ) {
+        stck.pop(addToResult);
+        postfix = postfix + addToResult;
+    }
+    */
+    /*while ( exp[i] != '\0' ) {
         while ( exp[i] != ' ' && isOperand(exp[i]) ) {
             string currentNumber = "";
             int j = 0;
@@ -186,16 +292,44 @@ string infix2postfix( const string exp ) {
             }
         }
 
-        if ( isOperator(exp[i]) ) {
-            string pushThis = "";
-            pushThis = exp[i];
+        string topString = "";
+        stck.getTop( topString);
+        char topChar = toCharFromString(topString);
 
-            stck.push( pushThis);
+        if ( isOperator(exp[i]) ) {
+            if ( stck.isEmpty() ) {
+                string pushThis = "";
+                pushThis = exp[i];
+
+                stck.push( pushThis);
+            }
+            else if ( precedenceWithParanthesis(exp[i]) >= precedenceWithParanthesis(topChar) ) {
+                string addThis = "";
+                stck.pop(addThis);
+                postfix = postfix + addThis;
+
+                /*stck.getTop( topString);
+                topChar = toCharFromString(topString);;
+
+                if (precedenceWithParanthesis(exp[i]) >= precedenceWithParanthesis(topChar)) {
+                    stck.push(toStringFromChar(exp[i]));
+                }
+                else {
+
+                }
+            }
+            else if (precedenceWithParanthesis(exp[i]) < precedenceWithParanthesis(topChar)) {
+                string addThis = "";
+                stck.pop(addThis);
+                postfix = postfix + addThis;
+            }
+            
         }
         
         i++;
-    }
-    /*Stack stck;
+    }*/
+
+    Stack stck;
     string postfix = "";
     char topChar;
     string topString;
@@ -255,7 +389,6 @@ string infix2postfix( const string exp ) {
         stck.pop(stackTop);
         postfix += stackTop;
     }
-    */
 
     return postfix;
 }
@@ -337,15 +470,16 @@ double evaluatePostfix( const string exp ) {
     double result;
     int i = 0;
     Stack stck;
+    string expression = trimmer(exp);
 
-    while ( exp[i] != '\0' ) {
-        while ( exp[i] != ' ' && isOperand(exp[i]) ) {
+    while ( expression[i] != '\0' ) {
+        while ( expression[i] != ' ' && isOperand(expression[i]) ) {
             string currentNumber = "";
             int j = 0;
             int initialI = i;
 
-            while ( exp[initialI + j] != ' ' ) {
-                currentNumber += exp[initialI + j];
+            while ( expression[initialI + j] != ' ' ) {
+                currentNumber += expression[initialI + j];
                 j++;
                 i++;
             }
@@ -353,7 +487,7 @@ double evaluatePostfix( const string exp ) {
             stck.push(currentNumber);
         }
         
-        if ( isOperator(exp[i]) ) {
+        if ( isOperator(expression[i]) ) {
             double firstValue;
             string firstString;
             stck.pop(firstString);
@@ -368,7 +502,7 @@ double evaluatePostfix( const string exp ) {
             string resultString;
             ostringstream stringStream;
 
-            switch (exp[i])
+            switch (expression[i])
             {
             case '+':
                 calculation = secondValue + firstValue;
