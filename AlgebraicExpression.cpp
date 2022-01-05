@@ -279,16 +279,16 @@ string prefix2infix( const string exp ) {
             switch (exp[index - i])
             {
             case '+':
-                resultString = "(" + firstString + " + " + secondString + ")";
+                resultString = "( " + firstString + " + " + secondString + " )";
                 break;
             case '-':
-                resultString = "(" + firstString + " - " + secondString + ")";
+                resultString = "( " + firstString + " - " + secondString + " )";
                 break;
             case '/':
-                resultString = "(" + firstString + " / " + secondString + ")";
+                resultString = "( " + firstString + " / " + secondString + " )";
                 break;
             case '*':
-                resultString = "(" + firstString + " * " + secondString + ")";
+                resultString = "( " + firstString + " * " + secondString + " )";
                 break;
             }
             stck.push( resultString);
