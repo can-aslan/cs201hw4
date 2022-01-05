@@ -1,5 +1,6 @@
 // Yağız Can Aslan 22001943
 
+#include <iostream>
 #include <string>
 #include <sstream>
 #include "AlgebraicExpression.h"
@@ -200,34 +201,22 @@ string infix2postfix( const string exp ) {
             stck.push( toStringFromChar(exp[i]));
         }
         else if ( exp[i] == ')' ) {
-            int first = 1;
             stck.getTop( topString);
 
             while ( topString != "(" ) {
-                postfix += topString;
-
-                if ( first == 1 ) {
-                    stck.pop();
-                    first = 0;
-                }
-
                 stck.pop( topString);
+                postfix += topString;
+                stck.getTop(topString);
             }
             stck.pop();
         }
         else if ( isOperator(exp[i]) ) {
-            int first = 1;
             stck.getTop(topString);
 
             while ( !stck.isEmpty() && precedence(exp[i], toCharFromString(topString)) ) {
-                postfix += topString;
-
-                if ( first == 1 ) {
-                    stck.pop();
-                    first = 0;
-                }
-
                 stck.pop(topString);
+                postfix += topString;
+                stck.getTop(topString);
             }
             stck.push( toStringFromChar(exp[i]));
         }
