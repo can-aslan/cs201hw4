@@ -185,153 +185,8 @@ string infix2prefix( const string exp ) {
 }
 
 string infix2postfix( const string exp ) {
-    /*
-    string postfix = "";
-    int i = 0;
-    Stack stck;
-    
-    while ( exp[i] != '\0' ) {
-        while ( exp[i] != ' ' && isOperand(exp[i]) ) {
-            string currentNumber = "";
-            int j = 0;
-            int initialI = i;
-
-            while ( exp[initialI + j] != ' ' ) {
-                currentNumber += exp[initialI + j];
-                j++;
-                i++;
-            }
-
-            postfix = postfix + currentNumber;
-        }
-
-        if ( exp[i] == '(' ) {
-            stck.push("(");
-        }
-        else if ( exp[i] == ')' ) {
-            string topString = "";
-            stck.getTop( topString);
-
-            while ( topString != "(" ) {
-                postfix = postfix + topString;
-                stck.pop();
-                stck.getTop( topString);
-            }
-            
-            stck.getTop( topString); // For redundancy
-            if ( topString == "(" ) {
-                stck.pop();
-            }
-        }
-        
-        string topString2 = "";
-        if ( stck.getTop( topString2) ) {
-            char topChar = toCharFromString(topString2);
-            if ( isOperator(exp[i]) && precedenceWithParanthesis(exp[i]) > precedenceWithParanthesis(topChar) ) {
-                stck.push(toStringFromChar(exp[i]));
-            }
-            else if ( isOperator(exp[i]) && precedenceWithParanthesis(exp[i]) <= precedenceWithParanthesis(topChar) ) {
-                while ( !stck.isEmpty() || precedenceWithParanthesis(exp[i]) <= precedenceWithParanthesis(topChar) ) {
-                    string addThis = "";
-                    if ( stck.pop(addThis) ) {
-                        postfix = postfix + addThis;
-
-                        if (stck.getTop( topString2)) {
-                            topChar = toCharFromString(topString2);
-                        }
-                    }
-                }
-
-                stck.push(toStringFromChar(exp[i]));
-            }
-            else {
-                stck.push(toStringFromChar(exp[i]));
-            }
-        }
-
-        i++;
-    }
-
-    string addToResult = "";
-    while ( !stck.isEmpty() ) {
-        stck.pop(addToResult);
-        postfix = postfix + addToResult;
-    }
-    */
-    /*while ( exp[i] != '\0' ) {
-        while ( exp[i] != ' ' && isOperand(exp[i]) ) {
-            string currentNumber = "";
-            int j = 0;
-            int initialI = i;
-
-            while ( exp[initialI + j] != ' ' ) {
-                currentNumber += exp[initialI + j];
-                j++;
-                i++;
-            }
-
-            postfix = postfix + currentNumber;
-        }
-        
-        if ( exp[i] == '(' ) {
-            stck.push("(");
-        }
-        else if ( exp[i] == ')' ) {
-            string topString = "";
-            stck.getTop( topString);
-
-            while ( topString != "(" ) {
-                postfix = postfix + topString;
-                stck.pop();
-                stck.getTop( topString);
-            }
-            
-            stck.getTop( topString); // For redundancy
-            if ( topString == "(" ) {
-                stck.pop();
-            }
-        }
-
-        string topString = "";
-        stck.getTop( topString);
-        char topChar = toCharFromString(topString);
-
-        if ( isOperator(exp[i]) ) {
-            if ( stck.isEmpty() ) {
-                string pushThis = "";
-                pushThis = exp[i];
-
-                stck.push( pushThis);
-            }
-            else if ( precedenceWithParanthesis(exp[i]) >= precedenceWithParanthesis(topChar) ) {
-                string addThis = "";
-                stck.pop(addThis);
-                postfix = postfix + addThis;
-
-                /*stck.getTop( topString);
-                topChar = toCharFromString(topString);;
-
-                if (precedenceWithParanthesis(exp[i]) >= precedenceWithParanthesis(topChar)) {
-                    stck.push(toStringFromChar(exp[i]));
-                }
-                else {
-
-                }
-            }
-            else if (precedenceWithParanthesis(exp[i]) < precedenceWithParanthesis(topChar)) {
-                string addThis = "";
-                stck.pop(addThis);
-                postfix = postfix + addThis;
-            }
-            
-        }
-        
-        i++;
-    }*/
-
     Stack stck;
     string postfix = "";
-    char topChar;
     string topString;
     int i = 0;
 
@@ -394,7 +249,56 @@ string infix2postfix( const string exp ) {
 }
 
 string prefix2infix( const string exp ) {
-    return NULL;
+    Stack stck;
+    string infix = "";
+    int i = 0;
+    int length = exp.length();
+    int index = length - 1;
+
+    while ( i < length ) {
+        cout << exp[index-i] << ": " << isOperand(exp[index-i]) << endl;
+        while ( exp[index - i] != ' ' && isOperand(exp[index - i]) ) {
+            string currentNumber = "";
+
+            while ( exp[index - i] != ' ' ) { // +[ ]12
+                currentNumber = exp[index - i] + currentNumber;
+                i++;   
+            }
+
+            stck.push(currentNumber);
+        }
+
+        if ( isOperator(exp[index - i]) ) {
+            string firstString = "";
+            stck.pop(firstString);
+
+            string secondString = "";
+            stck.pop(secondString);
+
+            string resultString;
+            switch (exp[index - i])
+            {
+            case '+':
+                resultString = "(" + firstString + " + " + secondString + ")";
+                break;
+            case '-':
+                resultString = "(" + firstString + " - " + secondString + ")";
+                break;
+            case '/':
+                resultString = "(" + firstString + " / " + secondString + ")";
+                break;
+            case '*':
+                resultString = "(" + firstString + " * " + secondString + ")";
+                break;
+            }
+            stck.push( resultString);
+        }
+
+        i++;
+    }
+
+    stck.pop(infix);
+    return infix;
 }
 
 string prefix2postfix( const string exp ) {
