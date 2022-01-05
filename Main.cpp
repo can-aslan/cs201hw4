@@ -6,7 +6,7 @@
 using namespace std;
 
 int main() {
-    cout << endl << "Test started." << endl;
+    cout << "Test started." << endl;
 
     cout << infix2prefix("( 12 + 5 ) - 20 * 4") << endl;
     cout << infix2postfix("( 12 + 5 ) - 20 * 4") << endl;

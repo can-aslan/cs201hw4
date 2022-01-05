@@ -247,7 +247,7 @@ string infix2postfix( const string exp ) {
         postfix += stackTop;
     }
 
-    return postfix;
+    return trimmer(postfix);
 }
 
 string prefix2infix( const string exp ) {
@@ -385,7 +385,8 @@ double evaluatePostfix( const string exp ) {
     double result;
     int i = 0;
     Stack stck;
-    string expression = trimmer(exp);
+    //string expression = trimmer(exp);
+    string expression = exp;
 
     while ( expression[i] != '\0' ) {
         while ( expression[i] != ' ' && isOperand(expression[i]) ) {
